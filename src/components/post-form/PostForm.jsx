@@ -8,16 +8,17 @@ import { useSelector } from "react-redux";
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
-            title: post?.title || "",
-            slug: post?.$id || "",
-            content: post?.content || "",
-            status: post?.status || "active",
+            // title: post?.title || "",
+            // slug: post?.$id || "",
+            // content: post?.content || "",
+            // status: post?.status || "active",
         },
     });
 
     const navigate = useNavigate();
-    const userData = useSelector((state) => state.auth.userData);
-
+    const userData = useSelector((state) => state.auth.userData.userData);
+    console.log(userData);
+    
     const submit = async (data) => {
         console.log(data);
         if (post) {
@@ -30,26 +31,24 @@ export default function PostForm({ post }) {
 
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
-                featuredImage: file ? file.$id : undefined,
+                // featuredImage: file ? file.$id : undefined,
             });
 
             if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
+                // navigate(`/post/${dbPost.$id}`);
+                console.log('success');
+                
             }
         } else {
             
             console.log("else", post);
-            const file = await appwriteService.uploadFile(data.image[0]);
-
-            if (file) {
-                const fileId = file.$id;
-                data.featuredImage = fileId;
                 const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
 
                 if (dbPost) {
-                    navigate(`/post/${dbPost.$id}`);
+                    // navigate(`/post/${dbPost.$id}`);
+                    
+                console.log('success');
                 }
-            }
         }
     };
 
@@ -95,7 +94,7 @@ export default function PostForm({ post }) {
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
             <div className="w-1/3 px-2">
-                <Input
+                {/* <Input
                     label="Featured Image :"
                     type="file"
                     className="mb-4"
@@ -110,7 +109,7 @@ export default function PostForm({ post }) {
                             className="rounded-lg"
                         />
                     </div>
-                )}
+                )} */}
                 <Select
                     options={["active", "inactive"]}
                     label="Status"

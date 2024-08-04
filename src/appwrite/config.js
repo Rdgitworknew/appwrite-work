@@ -18,14 +18,15 @@ export class Service{
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabasetId,
-                conf.appwriteBucketId,
+                conf.appwriteCollectionId,
                 slug,
                 {
                     title,
+                    slug,
                     content,
                     featuredImage,
                     status,
-
+                    userId
                 }
             )
         }catch(error){
