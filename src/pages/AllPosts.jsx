@@ -7,8 +7,7 @@ function AllPosts() {
     useEffect(() => {
         appwriteService.getPosts([]).then((posts) => {
             if (posts) {
-                console.log(posts);
-                
+                console.log(posts);                
                 setPosts(posts.documents)
             }
         })
@@ -17,14 +16,14 @@ function AllPosts() {
   return (
     <div className='w-full py-8'>
         <Container>
+            <h2>map</h2>
             <div className='flex flex-wrap'>
                 {posts.map((post) => (
-                    <div key={post.$id} className='p-2 w-1/4'>
-                         <h2
-            className='text-xl font-bold'
-            >{post.title}</h2>
+                    <div key={post.id}  className='p-2 w-1/4'>
+                       <PostCard {...post}/>
                     </div>
-                ))}
+                )
+                )}
             </div>
             </Container>
     </div>
