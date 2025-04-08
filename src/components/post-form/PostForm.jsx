@@ -18,6 +18,7 @@ export default function PostForm({ post }) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData.userData);
     console.log(userData);
+    console.log("This is stagging work");
     
     const submit = async (data) => {
         console.log(data);
