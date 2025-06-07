@@ -5,12 +5,14 @@ import {login} from '../store/authSlice'
 import {Button, Input, Logo} from './index.js'
 import {useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
+import {FaEye, FaEyeSlash} from 'react-icons/fa'
 
 function Signup() {
-    const navigate = useNavigate()
-    const [error, setError] = useState("")
-    const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
+    const navigate = useNavigate();
+    const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const dispatch = useDispatch();
+    const {register, handleSubmit} = useForm();
 
     const create = async(data) => {
         setError("")
@@ -67,13 +69,20 @@ function Signup() {
                             }
                         })}
                         />
-                        <Input
-                        label="Password: "
-                        type="password"
-                        placeholder="Enter your password"
-                        {...register("password", {
-                            required: true,})}
-                        />
+                        <div className="relative">
+                            <Input
+                                label="Password: "
+                                type={showPassword ? "text" : "password"} // 2. Change type
+                                placeholder="Enter your password"
+                                {...register("password", { required: true })}
+                            />
+                            <span
+                                className="absolute right-3 top-9 cursor-pointer text-xl text-gray-500"
+                                onClick={() => setShowPassword((prev) => !prev)} // 3. Toggle
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </span>
+                        </div>
                         <Button type="submit" className="w-full">
                             Create Account
                         </Button>
